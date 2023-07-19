@@ -3,7 +3,11 @@ import './dashboard.css';
 // import React from 'react';
 
 function Dashboard() {
-  return <></>;
+  return (
+    <div>
+      Welcome
+    </div>
+  )
 }
 
 export default Dashboard;
