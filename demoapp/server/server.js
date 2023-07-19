@@ -31,6 +31,7 @@ mongoose
   .then(() => console.log('Connected to DB'))
   .catch((err) => console.log(err));
 
+
 // parse contents
 // app.use(cors());
 app.use(cors());
