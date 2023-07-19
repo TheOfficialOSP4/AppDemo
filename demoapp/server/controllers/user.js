@@ -16,19 +16,27 @@ userController.createUser = (req, res, next) => {
   const saltRounds = 12;
   const { username, password, role } = req.body;
   // let user;
-  bcrypt
-    .hash(password, saltRounds)
-    .then((data) => {
-      User.create({ username, password: data, role })
-      .then((newUser) => {
-        console.log(newUser);
-        res.locals.user = newUser;
-        return next();
-      });
-    })
-    .catch((err) => {
-      return next('userController.createUser not working');
-    });
+  User.find({username})
+  .then((data)=>{
+    if (!data[0]){
+      bcrypt
+        .hash(password, saltRounds)
+        .then((data) => {
+          User.create({ username, password: data, role })
+          .then((newUser) => {
+            console.log(newUser);
+            res.locals.user = newUser;
+            return next();
+          });
+        })
+        .catch((err) => {
+          return next('userController.createUser not working');
+        });
+    }
+    else{
+      return res.json('Username already exists')
+    }
+  })
 };
 
 userController.verifyUser = (req, res, next) => {
