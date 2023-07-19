@@ -10,7 +10,7 @@ function Login() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState(false);
 
-  const URL = 'localhost:5173/login';
+  const URL = 'http://localhost:3000/login';
 
   const inputUsername = (event) => {
     setUsername(event.target.value);

@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom';
 
 function Signup() {
   const navigate = useNavigate();
-  const URL = 'localhost:5173/signup';
+  const URL = 'http://localhost:3000/signup';
 
   const usernameRef = useRef(null);
   const passwordRef = useRef(null);
@@ -30,9 +30,14 @@ function Signup() {
       alert('Please enter a password');
     } else if (role === '') {
       alert('Please specify role');
-    } else if (role.toLowerCase() === 'admin' || role.toLowerCase() === 'user') {
+    } else if (
+      role.toLowerCase() === 'admin' ||
+      role.toLowerCase() === 'user'
+    ) {
+      console.log('Sending POST request to server');
       fetch(URL, {
         method: 'POST',
+        mode: "cors",
         headers: {
           'Content-Type': 'application/json',
         },
@@ -42,17 +47,20 @@ function Signup() {
           role: role,
         }),
       })
-        .then((res) => res.json())
+        .then((res) => {
+          console.log('inside the first then ');
+          return res.json();
+        })
         .then((data) => {
-          console.log('data');
+          console.log(data);
           alert('Successfully created user');
           navigate('/');
         })
         .catch((error) => {
           console.log(error);
         });
-    }else{
-      alert("Invalid Role");
+    } else {
+      alert('Invalid Role');
     }
   };
 
@@ -84,7 +92,7 @@ function Signup() {
           id="formButton"
           type="submit"
           value="Submit"
-          class="submit-button"
+          className="submit-button"
         />
       </form>
     </div>
